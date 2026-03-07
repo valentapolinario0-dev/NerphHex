@@ -34,6 +34,5 @@ Button.TextColor3 = Color3.fromRGB(0,255,150)
 
 Button.MouseButton1Click:Connect(function()
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/SEUUSUARIO/NerphHex/main/script.lua"))()
-
+loadstring(game:HttpGet("https://raw.githubusercontent.com/valentapolinario0-dev/NerphHex/main/hub.lua"))()
 end)
