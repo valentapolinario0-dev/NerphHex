@@ -1,50 +1,35 @@
-<textarea id="script"></textarea>
-<br>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>NerphHex RAW Creator</title>
+<style>
+body{font-family:sans-serif;text-align:center;padding:30px;background:#111;color:#eee}
+textarea{width:90%;height:200px;margin:10px 0;padding:10px;background:#222;color:#eee;border:none;border-radius:5px;font-family:monospace;font-size:14px}
+button{padding:10px 20px;margin:10px;background:#0f0;color:#000;border:none;border-radius:5px;cursor:pointer;font-weight:bold}
+#link{margin-top:20px;word-break:break-all;font-family:monospace;color:#0f0}
+</style>
+</head>
+<body>
+
+<h2>NerphHex Script RAW Creator</h2>
+<textarea id="script" placeholder="Digite seu script Lua aqui..."></textarea><br>
 <button onclick="create()">Criar RAW</button>
 
-<p id="link"></p>
+<div id="link"></div>
 
 <script>
-
-const token = "SEU_GITHUB_TOKEN"
-
-function randomCode(){
-return Math.random().toString(36).substring(2,10)
-}
-
 async function create(){
+    let script=document.getElementById("script").value
+    if(!script){alert("Digite algum script!");return}
 
-let script = document.getElementById("script").value
-let code = randomCode()
+    let res=await fetch("SEU_WORKER_URL_AQUI",{method:"POST",body:script})
+    let raw=await res.text()
 
-let response = await fetch(
-"https://api.github.com/repos/valentapolinario0-dev/NerphHex/contents/"+code+".lua",
-{
-method:"PUT",
-headers:{
-"Authorization":"Bearer "+token,
-"Content-Type":"application/json"
-},
-body:JSON.stringify({
-message:"new script",
-content:btoa(script)
-})
-})
-
-let raw = "https://raw.githubusercontent.com/valentapolinario0-dev/NerphHex/main/"+code+".lua"
-
-document.getElementById("link").innerHTML =
-
-`
-RAW:<br>
-${raw}
-<br><br>
-
-ROBLOX:<br>
-
-loadstring(game:HttpGet("${raw}"))()
-`
-
+    document.getElementById("link").innerHTML=
+    `RAW:<br>${raw}<br><br>Roblox:<br>loadstring(game:HttpGet("${raw}"))()`
 }
-
 </script>
+
+</body>
+</html>
