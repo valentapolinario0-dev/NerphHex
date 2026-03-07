@@ -3,18 +3,103 @@
 <head>
 <meta charset="UTF-8">
 <title>NerphHex RAW</title>
+
+<style>
+
+body{
+background:#0b0b0b;
+color:#00ff9c;
+font-family:monospace;
+text-align:center;
+padding:40px;
+}
+
+textarea{
+width:80%;
+height:200px;
+background:#111;
+color:#00ff9c;
+border:1px solid #00ff9c;
+padding:10px;
+}
+
+button{
+margin-top:10px;
+padding:10px;
+background:#00ff9c;
+border:none;
+cursor:pointer;
+}
+
+#link{
+margin-top:20px;
+font-size:18px;
+}
+
+</style>
 </head>
 
 <body>
 
-<h1>RAW PAGE</h1>
+<h1>NerphHex RAW</h1>
 
-<div id="raw"></div>
+<textarea id="text" placeholder="Digite seu script aqui..."></textarea>
+
+<br>
+
+<button onclick="createRaw()">Criar Página RAW</button>
+
+<div id="link"></div>
+
+<hr>
+
+<h2>Conteúdo da Página</h2>
+
+<pre id="raw"></pre>
 
 <script>
 
-// SEUS SCRIPTS AQUI
-document.getElementById("raw").TextBoxText = "Digite script aqui!";
+function randomCode(length=8){
+const chars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+let result="";
+for(let i=0;i<length;i++){
+result+=chars[Math.floor(Math.random()*chars.length)];
+}
+return result;
+}
+
+function createRaw(){
+
+let content=document.getElementById("text").value;
+
+let code=randomCode();
+
+localStorage.setItem("raw_"+code,content);
+
+let url=window.location.origin+window.location.pathname+"#"+code;
+
+document.getElementById("link").innerHTML=
+"Link criado:<br><a href='"+url+"'>"+url+"</a>";
+
+}
+
+function loadRaw(){
+
+let code=location.hash.replace("#","");
+
+if(!code)return;
+
+let content=localStorage.getItem("raw_"+code);
+
+if(content){
+
+document.getElementById("raw").innerText=content;
+
+}
+
+}
+
+loadRaw();
 
 </script>
 
