@@ -2,12 +2,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>NerphHex</title>
+<title>NerphHex Script Hub</title>
 
 <style>
 
 body{
-background:#000;
+background:#0a0a0a;
 color:#00ff9c;
 font-family:monospace;
 text-align:center;
@@ -16,7 +16,7 @@ padding:40px;
 
 textarea{
 width:80%;
-height:200px;
+height:250px;
 background:#111;
 color:#00ff9c;
 border:1px solid #00ff9c;
@@ -25,72 +25,58 @@ padding:10px;
 
 button{
 margin-top:10px;
-padding:10px;
+padding:12px;
 background:#00ff9c;
 border:none;
 cursor:pointer;
 }
 
 </style>
+
 </head>
 
-<body id="body">
+<body>
 
-<div id="editor">
+<h1>NerphHex Script Creator</h1>
 
-<h1>NerphHex RAW Creator</h1>
-
-<textarea id="text" placeholder="Digite seu script..."></textarea>
+<textarea id="script" placeholder="Cole seu script Lua aqui..."></textarea>
 
 <br>
 
-<button onclick="createRaw()">Criar Link RAW</button>
+<button onclick="generate()">Gerar Script</button>
 
 <p id="link"></p>
-
-</div>
 
 <script>
 
 function randomCode(length=8){
 const chars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-let result="";
+let code="";
 for(let i=0;i<length;i++){
-result+=chars[Math.floor(Math.random()*chars.length)];
+code+=chars[Math.floor(Math.random()*chars.length)];
 }
-return result;
+return code;
 }
 
-function createRaw(){
+function generate(){
 
-let content=document.getElementById("text").value;
+let code=randomCode()
 
-let code=randomCode();
-
-localStorage.setItem("raw_"+code,content);
-
-let url=window.location.origin+window.location.pathname+"#"+code;
+let rawLink="https://raw.githubusercontent.com/valentapolinario0-dev/NerphHex/main/"+code+".lua"
 
 document.getElementById("link").innerHTML=
-"<a href='"+url+"'>"+url+"</a>";
+
+`
+RAW LINK:<br>
+${rawLink}
+<br><br>
+
+USE NO ROBLOX:<br>
+
+loadstring(game:HttpGet("${rawLink}"))()
+`
 
 }
-
-function loadRaw(){
-
-let code=location.hash.replace("#","");
-
-if(!code)return;
-
-let content=localStorage.getItem("raw_"+code);
-
-if(!content)return;
-
-document.body.innerHTML="<pre>"+content+"</pre>";
-
-}
-
-loadRaw();
 
 </script>
 
