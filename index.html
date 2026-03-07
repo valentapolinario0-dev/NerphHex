@@ -2,12 +2,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>NerphHex RAW</title>
+<title>NerphHex</title>
 
 <style>
 
 body{
-background:#0b0b0b;
+background:#000;
 color:#00ff9c;
 font-family:monospace;
 text-align:center;
@@ -31,31 +31,24 @@ border:none;
 cursor:pointer;
 }
 
-#link{
-margin-top:20px;
-font-size:18px;
-}
-
 </style>
 </head>
 
-<body>
+<body id="body">
 
-<h1>NerphHex RAW</h1>
+<div id="editor">
 
-<textarea id="text" placeholder="Digite seu script aqui..."></textarea>
+<h1>NerphHex RAW Creator</h1>
+
+<textarea id="text" placeholder="Digite seu script..."></textarea>
 
 <br>
 
-<button onclick="createRaw()">Criar Página RAW</button>
+<button onclick="createRaw()">Criar Link RAW</button>
 
-<div id="link"></div>
+<p id="link"></p>
 
-<hr>
-
-<h2>Conteúdo da Página</h2>
-
-<pre id="raw"></pre>
+</div>
 
 <script>
 
@@ -79,7 +72,7 @@ localStorage.setItem("raw_"+code,content);
 let url=window.location.origin+window.location.pathname+"#"+code;
 
 document.getElementById("link").innerHTML=
-"Link criado:<br><a href='"+url+"'>"+url+"</a>";
+"<a href='"+url+"'>"+url+"</a>";
 
 }
 
@@ -91,11 +84,9 @@ if(!code)return;
 
 let content=localStorage.getItem("raw_"+code);
 
-if(content){
+if(!content)return;
 
-document.getElementById("raw").innerText=content;
-
-}
+document.body.innerHTML="<pre>"+content+"</pre>";
 
 }
 
