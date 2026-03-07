@@ -1,39 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Infinite RAW Pages</title>
+<meta charset="UTF-8">
+<title>RAW Pages</title>
 
 <style>
 
 body{
 background:#000;
-color:#00ffcc;
+color:#00ff9c;
 font-family:monospace;
 text-align:center;
-padding-top:120px;
+padding-top:100px;
 }
 
 button{
-padding:15px;
+padding:12px;
 font-size:18px;
-background:#00ffcc;
+background:#00ff9c;
 border:none;
 cursor:pointer;
 }
 
 </style>
-
 </head>
 
 <body>
 
-<h1>INFINITE RAW PAGE GENERATOR</h1>
+<h1>RAW PAGE</h1>
 
-<p>Cada clique gera uma nova página com código aleatório</p>
+<h2 id="code"></h2>
 
-<button onclick="window.location='/new'">
-GERAR PÁGINA
-</button>
+<button onclick="newPage()">GERAR NOVA PÁGINA</button>
+
+<script>
+
+function randomCode(length=8){
+const chars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+let result="";
+for(let i=0;i<length;i++){
+result+=chars[Math.floor(Math.random()*chars.length)];
+}
+return result;
+}
+
+function newPage(){
+const code=randomCode();
+location.hash=code;
+loadPage();
+}
+
+function loadPage(){
+let code=location.hash.replace("#","");
+
+if(!code){
+code=randomCode();
+location.hash=code;
+}
+
+document.getElementById("code").innerText=code;
+}
+
+loadPage();
+
+</script>
 
 </body>
 </html>
