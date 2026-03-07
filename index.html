@@ -1,84 +1,50 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>NerphHex Script Hub</title>
-
-<style>
-
-body{
-background:#0a0a0a;
-color:#00ff9c;
-font-family:monospace;
-text-align:center;
-padding:40px;
-}
-
-textarea{
-width:80%;
-height:250px;
-background:#111;
-color:#00ff9c;
-border:1px solid #00ff9c;
-padding:10px;
-}
-
-button{
-margin-top:10px;
-padding:12px;
-background:#00ff9c;
-border:none;
-cursor:pointer;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<h1>NerphHex Script Creator</h1>
-
-<textarea id="script" placeholder="Cole seu script Lua aqui..."></textarea>
-
+<textarea id="script"></textarea>
 <br>
-
-<button onclick="generate()">Gerar Script</button>
+<button onclick="create()">Criar RAW</button>
 
 <p id="link"></p>
 
 <script>
 
-function randomCode(length=8){
-const chars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-let code="";
-for(let i=0;i<length;i++){
-code+=chars[Math.floor(Math.random()*chars.length)];
-}
-return code;
+const token = "SEU_GITHUB_TOKEN"
+
+function randomCode(){
+return Math.random().toString(36).substring(2,10)
 }
 
-function generate(){
+async function create(){
 
-let code=randomCode()
+let script = document.getElementById("script").value
+let code = randomCode()
 
-let rawLink="https://raw.githubusercontent.com/valentapolinario0-dev/NerphHex/main/"+code+".lua"
+let response = await fetch(
+"https://api.github.com/repos/valentapolinario0-dev/NerphHex/contents/"+code+".lua",
+{
+method:"PUT",
+headers:{
+"Authorization":"Bearer "+token,
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+message:"new script",
+content:btoa(script)
+})
+})
 
-document.getElementById("link").innerHTML=
+let raw = "https://raw.githubusercontent.com/valentapolinario0-dev/NerphHex/main/"+code+".lua"
+
+document.getElementById("link").innerHTML =
 
 `
-RAW LINK:<br>
-${rawLink}
+RAW:<br>
+${raw}
 <br><br>
 
-USE NO ROBLOX:<br>
+ROBLOX:<br>
 
-loadstring(game:HttpGet("${rawLink}"))()
+loadstring(game:HttpGet("${raw}"))()
 `
 
 }
 
 </script>
-
-</body>
-</html>
