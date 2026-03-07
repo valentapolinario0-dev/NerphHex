@@ -2,66 +2,19 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>RAW Pages</title>
-
-<style>
-
-body{
-background:#000;
-color:#00ff9c;
-font-family:monospace;
-text-align:center;
-padding-top:100px;
-}
-
-button{
-padding:12px;
-font-size:18px;
-background:#00ff9c;
-border:none;
-cursor:pointer;
-}
-
-</style>
+<title>NerphHex RAW</title>
 </head>
 
 <body>
 
 <h1>RAW PAGE</h1>
 
-<h2 id="code"></h2>
-
-<button onclick="newPage()">GERAR NOVA PÁGINA</button>
+<div id="raw"></div>
 
 <script>
 
-function randomCode(length=8){
-const chars="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-let result="";
-for(let i=0;i<length;i++){
-result+=chars[Math.floor(Math.random()*chars.length)];
-}
-return result;
-}
-
-function newPage(){
-const code=randomCode();
-location.hash=code;
-loadPage();
-}
-
-function loadPage(){
-let code=location.hash.replace("#","");
-
-if(!code){
-code=randomCode();
-location.hash=code;
-}
-
-document.getElementById("code").innerText=code;
-}
-
-loadPage();
+// SEUS SCRIPTS AQUI
+document.getElementById("raw").innerText = "Seu script carregou!";
 
 </script>
 
