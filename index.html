@@ -1,1 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>NerphHex</title>
+</head>
 
+<body>
+
+<h2>Criar RAW Script</h2>
+
+<textarea id="s" placeholder="Cole seu script aqui" style="width:100%;height:200px;"></textarea>
+<br><br>
+
+<button onclick="c()">CRIAR RAW</button>
+
+<br><br>
+<div id="l"></div>
+
+<script>
+async function c(){
+let t=document.getElementById("s").value.trim()
+if(!t){alert("Digite um script");return}
+
+let r=await fetch("https://nerphhex.valentapolinario0.workers.dev",{
+method:"POST",
+body:t
+})
+
+let raw=await r.text()
+document.getElementById("l").innerText=raw
+}
+</script>
+
+</body>
+</html>
